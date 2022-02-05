@@ -1,22 +1,18 @@
-from flask import Flask,request,jsonify
-import random
-import requests
-from flask_ngrok import run_with_ngrok
-app = Flask(__name__)
-run_with_ngrok(app)
-url = "http://numbersapi.com/"
-@app.route("/getfact",methods=['POST'])
 def getFact():
     req = request.get_json()
     intent = req.get("queryResult").get("intent").get("displayName")
     number = req.get("queryResult").get("parameters").get("number")
     qtype = req.get("queryResult").get("parameters").get("type")
     number2 = req.get("queryResult").get("parameters").get("number2")
-
     print(req)
-    print(intent)
-    print(number)
-    print(qtype)
+    # print(intent)
+    # print(number)
+    # print(qtype)
+    if number is None or not number.isnumeric():
+        number = 1;
+    if number2 is None or not number2.isnumeric():
+        number2 = 1;
+    print(number, number2)
     if intent == "numbers":
         if qtype == "random":
             qtype = random.choice(["trivia","year","math"])
@@ -28,20 +24,20 @@ def getFact():
         print(qurl)
         return jsonify({"fulfillmentText":res}) #prinnt on dialofflow
     if intent == "addition":
-        addition = number + number2;
+        addition = int(number) + int(number2);
         print(addition)
         return jsonify({"fulfillmentText":addition});
     elif intent == "multiply":
-        multiply = number * number2;
+        multiply = int(number) * int(number2);
         print(multiply)
         return jsonify({"fulfillmentText":multiply});
     elif intent == "substraction":
-        substraction = number - number2;
+        substraction = int(number) - int(number2);
         print(substraction)
         return jsonify({"fulfillmentText":substraction});
     elif intent == "division":
         try:
-            division = number / number2;
+            division = int(number) / int(number2);
         except: 
             return jsonify({"fulfillmentText":"Ohh Your cant divide it by Zero"}); 
         return jsonify({"fulfillmentText":division});
