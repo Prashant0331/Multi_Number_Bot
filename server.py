@@ -11,8 +11,8 @@ def respond():
     return "You have reached the root endpoint"
 
 
-#curl -d '({"name":"advait","age":"21"})'
-#curl -d '{"name":"advait","age":"21"}' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/
+#curl -d '({"name":"prashant","age":"23"})'
+#curl -d '{"name":"prashant","age":"23"}' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/
 
 @app.route("/",methods=['POST'])
 def verify():
